@@ -49,7 +49,7 @@ list = [2, 3, -6, 7, -6, 7]
 
 
 #Phase 2 #
-# def largest_contiguous_subsum(list) #
+# def largest_contiguous_subsum(list) #O(n**2)
 #   largest_sum = list[0]
   
 #   until list.empty?
@@ -64,22 +64,46 @@ list = [2, 3, -6, 7, -6, 7]
 #   return largest_sum
 # end
 
-def largest_contiguous_subsum(list) #[5, 3, -7]
-  largest_sum = list.first #
-# debugger
-  list.each.with_index do |ele,i| #3
-    if list[0..i].sum > largest_sum #3
-      largest_sum = list[0..i].sum
-    end
-    if list[i..-1].sum > largest_sum #
-      largest_sum = list[i..-1].sum
-    end
-    if ele > largest_sum
-      largest_sum = ele
-    end
-  end
-  largest_sum
+# def largest_contiguous_subsum(list) #O(n**2)
+#   largest_sum = list.first #
+# # debugger
+# #.sum has O(n/2) => O(n)
+#   list.each.with_index do |ele,i| #3
+#     if list[0..i].sum > largest_sum #3
+#       largest_sum = list[0..i].sum
+#     end
+#     if list[i..-1].sum > largest_sum #
+#       largest_sum = list[i..-1].sum
+#     end
+#     if ele > largest_sum
+#       largest_sum = ele
+#     end
+#   end
+#   largest_sum
 
+# end
+
+def largest_contiguous_subsum(list)
+  #current streak if it becomes negative, set back to zero
+  #maximum
+  largest_sum = list[0]
+  current_sum = 0
+  list.each do |ele|
+    # debuggerquit
+
+    if ele + current_sum < 0
+      current_sum = 0
+    else
+      current_sum += ele
+    end
+
+    if current_sum >= largest_sum
+      largest_sum = current_sum
+    end
+
+  end
+
+    largest_sum == 0 ? list.max : largest_sum
 end
 
 
